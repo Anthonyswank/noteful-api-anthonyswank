@@ -7,7 +7,7 @@ const jsonParser = express.json()
 
 noteRouter
 
-  .route( '/note' )
+  .route( '/' )
 
   .get( ( req, res, next ) => {
     const knexInstance = req.app.get( 'db' )
@@ -51,7 +51,7 @@ noteRouter
 
 noteRouter
 
-  .route( '/note/:noteId' )
+  .route( '/:noteId' )
 
   .all( ( req, res, next ) => {
     NoteService.getNoteById(

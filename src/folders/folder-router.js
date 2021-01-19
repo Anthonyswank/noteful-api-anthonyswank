@@ -8,7 +8,7 @@ const jsonParser = express.json()
 
 folderRouter
 
-  .route( '/folder' )
+  .route( '/' )
 
   .get( ( req, res, next ) => {
     const knexInstance = req.app.get( 'db' )
@@ -36,7 +36,7 @@ folderRouter
 
 folderRouter
 
-  .route( '/folder/:folderId' )
+  .route( '/:folderId' )
 
   .all( ( req, res, next ) => {
     FolderService.getFolderById(

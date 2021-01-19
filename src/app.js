@@ -23,9 +23,9 @@ app.use( cors() )
 
 app.use( tokenAuth )
 
-app.use( '/api', folderRouter )
+app.use( '/folders' , folderRouter )
 
-app.use( '/api', noteRouter )
+app.use( '/notes' , noteRouter )
 
 app.use( errorHandler )
 
