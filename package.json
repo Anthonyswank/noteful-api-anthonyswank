@@ -1,5 +1,5 @@
 {
-  "name": "noteful-api",
+  "name": "noteful-api-anthonyswank",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "deploy": "git push heroku master"
   },
   "keywords": [],
-  "author": "Michael Wedd",
+  "author": "Anthony Swank",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
