@@ -6,7 +6,6 @@ const logger = require( '../logger' )
 const folderRouter = express.Router()
 const jsonParser = express.json()
 
-// pull each piece of logic out of each route, all after .get, and put that all into a route file with a function for each route.
 folderRouter
 
   .route( '/folder' )
@@ -22,7 +21,6 @@ folderRouter
 
   .post( jsonParser, ( req, res, next ) => {
     const { name : newFolderName } = req.body
-    // build a validator / sanitizer middlewear for this.
     FolderService.insertFolder(
       req.app.get( 'db' ),
       newFolderName
@@ -52,14 +50,13 @@ folderRouter
             error : { message : 'Folder not found.' }
           } )
         }
-        res.folder = folder // save folder for next middlewear, and pass on to next
+        res.folder = folder
         next()
       } )
       .catch( next )
   } )
 
   .get( ( req, res, next ) => {
-    // res.json( res.folder )
 
     FolderService.getNotesForFolder(
       req.app.get( 'db' ), 

@@ -5,7 +5,6 @@ const NoteService = require( './note-service' )
 const noteRouter = express.Router()
 const jsonParser = express.json()
 
-// pull each piece of logic out of each route, all after .get, and put that all into a route file with a function for each route.
 noteRouter
 
   .route( '/note' )
@@ -33,12 +32,9 @@ noteRouter
       name, 
       folderid
     }
-    // content is optional.
     if ( content ) {
       newNote.content = content
     }
-
-    // build a validator / sanitizer middlewear for this asap.
     NoteService.insertNote(
       req.app.get( 'db' ),
       newNote
@@ -68,7 +64,7 @@ noteRouter
             error : { message : 'Note not found.' }
           } )
         }
-        res.note = note // save note for next middlewear, and pass on to next
+        res.note = note
         next()
       } )
       .catch( next )
@@ -94,7 +90,7 @@ noteRouter
       ...noteToUpdate, 
       modified
     }
-    // ISSUE: You can't reassociate a note to a new folder, probably because of the constraints of the field.
+    
     NoteService.updateNote(
       req.app.get( 'db' ),
       res.note.id,
