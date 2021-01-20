@@ -21,8 +21,6 @@ app.use( helmet() )
 
 app.use( cors() )
 
-app.use( tokenAuth )
-
 app.use( '/folders' , folderRouter )
 
 app.use( '/notes' , noteRouter )
