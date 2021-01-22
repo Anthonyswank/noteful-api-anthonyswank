@@ -36,16 +36,16 @@ folderRouter
 
 folderRouter
 
-  .route( '/:folderId' )
+  .route( '/:folderid' )
 
   .all( ( req, res, next ) => {
     FolderService.getFolderById(
       req.app.get( 'db' ),
-      req.params.folderId
+      req.params.folderid
     )
       .then( ( folder ) => {
         if ( !folder ) {
-          logger.error( `Folder with id ${req.params.folderId} not found` )
+          logger.error( `Folder with id ${req.params.folderid} not found` )
           return res.status( 404 ).json( {
             error : { message : 'Folder not found.' }
           } )
@@ -79,7 +79,7 @@ folderRouter
    
     FolderService.updateFolderName(
       req.app.get( 'db' ),
-      req.params.folderId,
+      req.params.folderid,
       newFolderName
     )
       .then( ( updatedFolder ) => {
@@ -94,7 +94,7 @@ folderRouter
   .delete( ( req, res, next ) => {
     FolderService.deleteFolder(
       req.app.get( 'db' ),
-      req.params.folderId
+      req.params.folderid
     )
       .then( ( numRowsAffected ) => {
         res

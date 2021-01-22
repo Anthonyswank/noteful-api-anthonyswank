@@ -75,8 +75,8 @@ noteRouter
   } )
   
   .patch( jsonParser, ( req, res, next ) => {
-    const { name, folderId, content } = req.body
-    const noteToUpdate = { name, folderId, content }
+    const { name, folderid, content } = req.body
+    const noteToUpdate = { name, folderid, content }
     const numberOfUpdatedFields = Object.values( noteToUpdate ).filter( Boolean ).length
     if ( numberOfUpdatedFields === 0 ) {
       return res.status( 400 ).json( {
