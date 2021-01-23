@@ -13,7 +13,7 @@ folderRouter
   .get( ( req, res, next ) => {
     const knexInstance = req.app.get( 'db' )
     FolderService.getAllFolders( knexInstance )
-      .then( ( folders ) => {
+      .then(folders => {
         res.json( folders )
       } )
       .catch( next )
@@ -25,7 +25,7 @@ folderRouter
       req.app.get( 'db' ),
       newFolderName
     )
-      .then( ( folder ) => {
+      .then(folder => {
         res
           .status( 201 )
           .location( path.posix.join( req.originalUrl, `/${folder.id}` ) )
@@ -43,7 +43,7 @@ folderRouter
       req.app.get( 'db' ),
       req.params.folderid
     )
-      .then( ( folder ) => {
+      .then(folder => {
         if ( !folder ) {
           logger.error( `Folder with id ${req.params.folderid} not found` )
           return res.status( 404 ).json( {
@@ -57,22 +57,8 @@ folderRouter
   } )
 
   .get( ( req, res, next ) => {
-
-    FolderService.getNotesForFolder(
-      req.app.get( 'db' ), 
-      res.folder.id
-    )
-      .then( ( notes ) => {
-        if ( !notes ) {
-          return res.status( 404 ).json( {
-            error : { message : 'Cannot find any notes for that folder' }
-          } )
-        }
-        const folder = res.folder
-        res.json( { folder, notes } )
-        next()
-      } )
-  } )
+    res.json(res.folder)
+  })
   
   .patch( jsonParser, ( req, res, next ) => {
     const { name : newFolderName } = req.body
