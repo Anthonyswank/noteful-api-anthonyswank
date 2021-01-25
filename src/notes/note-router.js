@@ -1,9 +1,18 @@
 const express = require( 'express' )
 const path = require( 'path' )
+const xss = require( 'xss' )
 const NoteService = require( './note-service' )
 
 const noteRouter = express.Router()
 const jsonParser = express.json()
+
+const serializeNote = note => ({
+  id: note.id,
+  name: xss(note.title),
+  content: xss(note.content),
+  modified: note.modified,
+  folderid: note.folderid
+});
 
 noteRouter
 
@@ -15,13 +24,13 @@ noteRouter
       .then(notes => {
         res
           .status( 200 )
-          .json( notes )
+          .json( notes.map(serializeNote) )
       } )
       .catch( next )
   } )
 
   .post( jsonParser, ( req, res, next ) => {
-    const { name, folderid, content } = req.body
+    const { name, folderid, content, modified } = req.body
     if ( !( name && folderid ) ) {
       return res.status( 400 ).json( {
         error : { message : 'Incomplete note submission.' }
@@ -29,8 +38,9 @@ noteRouter
     }
 
     const newNote = {
-      name, 
-      folderid
+      name: name, 
+      folderid: folderid,
+      modified: modified
     }
     if ( content ) {
       newNote.content = content
@@ -43,7 +53,7 @@ noteRouter
         res
           .status( 201 )
           .location( path.posix.join( req.originalUrl, `/${note.id}` ) )
-          .json( note )
+          .json( serializeNote(note) )
       } )
       .catch( next )
   } )
@@ -71,7 +81,7 @@ noteRouter
   } )
 
   .get( ( req, res, next ) => {
-    res.json( res.note )
+    res.json( serializeNote(res.note) )
   } )
   
   .patch( jsonParser, ( req, res, next ) => {
