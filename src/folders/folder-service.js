@@ -20,11 +20,11 @@ const FolderService = {
       .where( { id } )
       .first()
   },
-  getNotesForFolder( knex, folderid ) {
+  getNotesForFolder( knex, folderId ) {
     const notes = knex
       .select( '*' )
       .from( 'notes' )
-      .where( { folderid } )
+      .where( { folderId } )
     return notes
   },
   deleteFolder( knex, id ) {
