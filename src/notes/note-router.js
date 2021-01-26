@@ -10,7 +10,8 @@ const serializeNote = note => ({
   id: note.id,
   name: xss(note.name),
   content: xss(note.content),
-  folderId: note.folderId
+  folderId: note.folderId,
+  modified: note.modified
 });
 
 noteRouter
@@ -29,7 +30,7 @@ noteRouter
   } )
 
   .post( jsonParser, ( req, res, next ) => {
-    const { name, folderId, content } = req.body
+    const { name, folderId, content, modified } = req.body
     if ( !( name && folderId ) ) {
       return res.status( 400 ).json( {
         error : { message : 'Incomplete note submission.' }
@@ -39,6 +40,7 @@ noteRouter
     const newNote = {
       name: name, 
       folderId: folderId,
+      modified: modified
     }
     if ( content ) {
       newNote.content = content
