@@ -30,8 +30,8 @@ noteRouter
   } )
 
   .post( jsonParser, ( req, res, next ) => {
-    const { name, folderid, content, modified } = req.body
-    if ( !( name && folderid ) ) {
+    const { name, folderId, content, modified } = req.body
+    if ( !( name && folderId ) ) {
       return res.status( 400 ).json( {
         error : { message : 'Incomplete note submission.' }
       } )
